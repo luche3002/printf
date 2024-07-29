@@ -2,11 +2,11 @@
 #include <unistd.h>
 #include <stdarg.h>
 
-/* Function prototypes */
 int handle_format(char spec, va_list args);
 int print_char(va_list args);
 int print_string(va_list args);
 int print_percent(void);
+int print_number(int n);
 
 /**
  * _printf - Custom printf function
@@ -58,6 +58,10 @@ int handle_format(char spec, va_list args)
 		case '%':
 			count += print_percent();
 			break;
+		case 'd':
+		case 'i':
+			count += print_number(va_arg(args, int));
+			break;
 		default:
 			write(1, "%", 1);
 			write(1, &spec, 1);
@@ -102,4 +106,48 @@ int print_string(va_list args)
 int print_percent(void)
 {
 	return (write(1, "%", 1));
+}
+
+/**
+ * print_number - Prints an integer number
+ * @n: Number to print
+ * Return: Number of characters printed
+ */
+int print_number(int n)
+{
+	char buffer[11];
+	int len = 0;
+	unsigned int num;
+	unsigned int i;
+
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		num = -n;
+		len++;
+	}
+	else
+	{
+		num = n;
+	}
+
+	if (num == 0)
+	{
+		buffer[len++] = '0';
+	}
+	else
+	{
+		i = 1000000000;
+		while (i > 0)
+		{
+			if (num >= i)
+			{
+				buffer[len++] = '0' + (num / i);
+				num %= i;
+			}
+			i /= 10;
+		}
+	}
+
+	return (write(1, buffer, len));
 }
