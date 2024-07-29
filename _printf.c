@@ -4,6 +4,9 @@
 
 /* Function prototypes */
 int handle_format(char spec, va_list args);
+int print_char(va_list args);
+int print_string(va_list args);
+int print_percent(void);
 
 /**
  * _printf - Custom printf function
@@ -16,7 +19,6 @@ int _printf(const char *format, ...)
 	int i = 0, count = 0;
 
 	va_start(args, format);
-
 	while (format && format[i])
 	{
 		if (format[i] == '%')
@@ -31,7 +33,6 @@ int _printf(const char *format, ...)
 		}
 		i++;
 	}
-
 	va_end(args);
 	return (count);
 }
@@ -62,7 +63,6 @@ int handle_format(char spec, va_list args)
 			write(1, &spec, 1);
 			count += 2;
 	}
-
 	return (count);
 }
 
@@ -92,7 +92,6 @@ int print_string(va_list args)
 		str = "(null)";
 	while (str[len])
 		len++;
-
 	return (write(1, str, len));
 }
 

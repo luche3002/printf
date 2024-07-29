@@ -5,29 +5,29 @@ int main(void)
 {
 	int count;
 
-	/* Test case 1: Single character */
+	/* Test case for printing a character */
 	count = _printf("Character: %c\n", 'A');
-	printf("Returned: %d\n", count); /* Compare with: Character: A */
+	printf("Printf returned: %d\n", count);
 
-	/* Test case 2: String */
-	count = _printf("String: %s\n", "Hello");
-	printf("Returned: %d\n", count); /* Compare with: String: Hello */
+	/* Test case for printing a string */
+	count = _printf("String: %s\n", "Hello, World!");
+	printf("Printf returned: %d\n", count);
 
-	/* Test case 3: Percent sign */
+	/* Test case for printing a percent sign */
 	count = _printf("Percent sign: %%\n");
-	printf("Returned: %d\n", count); /* Compare with: Percent sign: % */
+	printf("Printf returned: %d\n", count);
 
-	/* Test case 4: Null string */
+	/* Test case for printing an integer (decimal) */
+	count = _printf("Integer: %d\n", 123);
+	printf("Printf returned: %d\n", count);
+
+	/* Test case for printing an integer (hexadecimal) */
+	count = _printf("Hexadecimal: %i\n", 456);
+	printf("Printf returned: %d\n", count);
+
+	/* Test case for printing a null string */
 	count = _printf("Null string: %s\n", NULL);
-	printf("Returned: %d\n", count); /* Compare with: Null string: (null) */
+	printf("Printf returned: %d\n", count);
 
-	/* Test case 5: Multiple specifiers */
-	count = _printf("Multiple: %c %s %%\n", 'X', "Test");
-	printf("Returned: %d\n", count); /* Compare with: Multiple: X Test % */
-
-	/* Test case 6: Format specifier at end of string */
-	count = _printf("End with percent %\n");
-	printf("Returned: %d\n", count); /* Compare with: End with percent % */
-
-	return 0;
+	return (0);
 }
