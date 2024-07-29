@@ -2,6 +2,9 @@
 #include <unistd.h>
 #include <stdarg.h>
 
+/* Function prototypes */
+int handle_format(char spec, va_list args);
+
 /**
  * _printf - Custom printf function
  * @format: Format string
@@ -19,22 +22,7 @@ int _printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			switch (format[i])
-			{
-				case 'c':
-					count += print_char(args);
-					break;
-				case 's':
-					count += print_string(args);
-					break;
-				case '%':
-					count += print_percent();
-					break;
-				default:
-					write(1, &format[i - 1], 1);
-					write(1, &format[i], 1);
-					count += 2;
-			}
+			count += handle_format(format[i], args);
 		}
 		else
 		{
@@ -45,6 +33,36 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(args);
+	return (count);
+}
+
+/**
+ * handle_format - Handles format specifiers
+ * @spec: Format specifier character
+ * @args: Argument list
+ * Return: Number of characters printed
+ */
+int handle_format(char spec, va_list args)
+{
+	int count = 0;
+
+	switch (spec)
+	{
+		case 'c':
+			count += print_char(args);
+			break;
+		case 's':
+			count += print_string(args);
+			break;
+		case '%':
+			count += print_percent();
+			break;
+		default:
+			write(1, "%", 1);
+			write(1, &spec, 1);
+			count += 2;
+	}
+
 	return (count);
 }
 
